@@ -1,6 +1,7 @@
 # jupyterlab-link-share
 
 ![Github Actions Status](https://github.com/jtpio/jupyterlab-link-share/workflows/Build/badge.svg)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jtpio/jupyterlab-link-share/main?urlpath=/lab)
 
 JupyterLab Extension to share the URL to a running Jupyter Server
 
