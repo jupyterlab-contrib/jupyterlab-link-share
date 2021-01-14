@@ -5,6 +5,8 @@
 
 JupyterLab Extension to share the URL to a running Jupyter Server
 
+![screencast](https://user-images.githubusercontent.com/591645/104604669-e0f53880-567d-11eb-989f-2bf2edd416ce.gif)
+
 ## Requirements
 
 * JupyterLab >= 3.0
