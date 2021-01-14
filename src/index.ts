@@ -36,7 +36,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     app: JupyterFrontEnd,
     palette: ICommandPalette | null,
     menu: IMainMenu | null,
-    translator: ITranslator | null,
+    translator: ITranslator | null
   ) => {
     const { commands } = app;
     const trans = (translator ?? nullTranslator).load('jupyterlab');
@@ -67,7 +67,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     if (palette) {
-      palette.addItem({ command: CommandIDs.share, category: trans.__('Server') });
+      palette.addItem({
+        command: CommandIDs.share,
+        category: trans.__('Server')
+      });
     }
 
     if (menu) {
