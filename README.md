@@ -4,8 +4,6 @@
 
 JupyterLab Extension to share the URL to a running Jupyter Server
 
-
-
 ## Requirements
 
 * JupyterLab >= 3.0
@@ -15,7 +13,6 @@ JupyterLab Extension to share the URL to a running Jupyter Server
 ```bash
 pip install jupyterlab-link-share
 ```
-
 
 ## Contributing
 

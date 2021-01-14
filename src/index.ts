@@ -22,14 +22,14 @@ import { Menu } from '@lumino/widgets';
  * The command IDs used by the plugin.
  */
 namespace CommandIDs {
-  export const share = 'jupyterlab-yjs-example:share';
+  export const share = 'link-share:share';
 }
 
 /**
  * Plugin to share the URL of the running Jupyter Server
  */
-const share: JupyterFrontEndPlugin<void> = {
-  id: 'jupyterlab-yjs-example:share',
+const plugin: JupyterFrontEndPlugin<void> = {
+  id: 'jupyterlab-link-share:plugin',
   autoStart: true,
   optional: [ICommandPalette, IMainMenu, ITranslator],
   activate: (
@@ -82,5 +82,5 @@ const share: JupyterFrontEndPlugin<void> = {
   }
 };
 
-const plugins: JupyterFrontEndPlugin<any>[] = [share];
+const plugins: JupyterFrontEndPlugin<any>[] = [plugin];
 export default plugins;
