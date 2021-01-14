@@ -3,15 +3,84 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
+import {
+  Clipboard,
+  Dialog,
+  ICommandPalette,
+  showDialog
+} from '@jupyterlab/apputils';
+
+import { PageConfig, URLExt } from '@jupyterlab/coreutils';
+
+import { IMainMenu } from '@jupyterlab/mainmenu';
+
+import { ITranslator, nullTranslator } from '@jupyterlab/translation';
+
+import { Menu } from '@lumino/widgets';
+
 /**
- * Initialization data for the jupyterlab-link-share extension.
+ * The command IDs used by the plugin.
  */
-const extension: JupyterFrontEndPlugin<void> = {
-  id: 'jupyterlab-link-share:plugin',
+namespace CommandIDs {
+  export const share = 'jupyterlab-yjs-example:share';
+}
+
+/**
+ * Plugin to share the URL of the running Jupyter Server
+ */
+const share: JupyterFrontEndPlugin<void> = {
+  id: 'jupyterlab-yjs-example:share',
   autoStart: true,
-  activate: (app: JupyterFrontEnd) => {
-    console.log('JupyterLab extension jupyterlab-link-share is activated!');
+  optional: [ICommandPalette, IMainMenu, ITranslator],
+  activate: (
+    app: JupyterFrontEnd,
+    palette: ICommandPalette | null,
+    menu: IMainMenu | null,
+    translator: ITranslator | null,
+  ) => {
+    const { commands } = app;
+    const trans = (translator ?? nullTranslator).load('jupyterlab');
+
+    commands.addCommand(CommandIDs.share, {
+      label: trans.__('Share Jupyter Server Link'),
+      execute: async () => {
+        const link = URLExt.normalize(
+          `${PageConfig.getUrl({
+            workspace: PageConfig.defaultWorkspace
+          })}?token=${PageConfig.getToken()}`
+        );
+        const result = await showDialog({
+          title: trans.__('Share Jupyter Server Link'),
+          body: link,
+          buttons: [
+            Dialog.cancelButton({ label: trans.__('Cancel') }),
+            Dialog.okButton({
+              label: trans.__('Copy'),
+              caption: trans.__('Copy the link to the Jupyter Server')
+            })
+          ]
+        });
+        if (result.button.accept) {
+          Clipboard.copyToSystem(link);
+        }
+      }
+    });
+
+    if (palette) {
+      palette.addItem({ command: CommandIDs.share, category: trans.__('Server') });
+    }
+
+    if (menu) {
+      // Create a menu
+      const shareMenu: Menu = new Menu({ commands });
+      shareMenu.title.label = trans.__('Share');
+      menu.addMenu(shareMenu, { rank: 10000 });
+
+      // Add the command to the menu
+      shareMenu.addItem({ command: CommandIDs.share });
+    }
   }
 };
 
-export default extension;
+const plugins: JupyterFrontEndPlugin<any>[] = [share];
+export default plugins;
