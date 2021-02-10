@@ -16,7 +16,7 @@ import { IMainMenu } from '@jupyterlab/mainmenu';
 
 import { ITranslator, nullTranslator } from '@jupyterlab/translation';
 
-import { Menu } from '@lumino/widgets';
+import { Menu, Widget } from '@lumino/widgets';
 
 import { requestAPI } from './handler';
 
@@ -43,27 +43,32 @@ const plugin: JupyterFrontEndPlugin<void> = {
     const { commands } = app;
     const trans = (translator ?? nullTranslator).load('jupyterlab');
 
-    requestAPI<any>('get_example')
-      .then((data: any) => {
-        console.log(data);
-      })
-      .catch((reason: any) => {
-        console.error(
-          `The jupyterlab_link_share server extension appears to be missing.\n${reason}`
-        );
-      });
-
     commands.addCommand(CommandIDs.share, {
       label: trans.__('Share Jupyter Server Link'),
       execute: async () => {
-        const link = URLExt.normalize(
-          `${PageConfig.getUrl({
-            workspace: PageConfig.defaultWorkspace
-          })}?token=${PageConfig.getToken()}`
-        );
+        const results: { token: string }[] = await requestAPI<any>('servers');
+
+        const links = results.map(server => {
+          return URLExt.normalize(
+            `${PageConfig.getUrl({
+              workspace: PageConfig.defaultWorkspace
+            })}?token=${server.token}`
+          );
+        });
+
+        const entries = document.createElement('div');
+        links.map(link => {
+          const p = document.createElement('p');
+          const a = document.createElement('a');
+          a.href = link;
+          a.innerText = link;
+          p.appendChild(a);
+          entries.appendChild(p);
+        });
+
         const result = await showDialog({
           title: trans.__('Share Jupyter Server Link'),
-          body: link,
+          body: new Widget({ node: entries }),
           buttons: [
             Dialog.cancelButton({ label: trans.__('Cancel') }),
             Dialog.okButton({
@@ -73,7 +78,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
           ]
         });
         if (result.button.accept) {
-          Clipboard.copyToSystem(link);
+          Clipboard.copyToSystem(links[0]);
         }
       }
     });
