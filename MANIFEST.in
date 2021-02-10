@@ -1,13 +1,14 @@
 include LICENSE
 include README.md
 include pyproject.toml
-include jupyter-config/jupyterlab-link-share.json
+include jupyter-config/jupyter_server_config.d/jupyterlab_link_share.json
+include jupyter-config/jupyter_notebook_config.d/jupyterlab_link_share.json
 
 include package.json
 include install.json
 include ts*.json
 
-graft jupyterlab-link-share/labextension
+graft jupyterlab_link_share/labextension
 
 # Javascript files
 graft src
