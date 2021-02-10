@@ -21,8 +21,8 @@ jobs:
       with:
         python-version: '3.7'
         architecture: 'x64'
-    
-    
+
+
     - name: Setup pip cache
       uses: actions/cache@v2
       with:
@@ -43,7 +43,7 @@ jobs:
         key: yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           yarn-
-    
+
     - name: Install dependencies
       run: python -m pip install jupyterlab
     - name: Build the extension
@@ -53,4 +53,7 @@ jobs:
         python -m pip install .
 
         jupyter labextension list 2>&1 | grep -ie "jupyterlab-link-share.*OK"
+        jupyter server extension list 2>&1 | grep -ie "jupyterlab_link_share.*OK"
+        jupyter serverextension list 2>&1 | grep -ie "jupyterlab_link_share.*OK"
+
         python -m jupyterlab.browser_check

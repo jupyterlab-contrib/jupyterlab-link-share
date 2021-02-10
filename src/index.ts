@@ -18,6 +18,8 @@ import { ITranslator, nullTranslator } from '@jupyterlab/translation';
 
 import { Menu } from '@lumino/widgets';
 
+import { requestAPI } from './handler';
+
 /**
  * The command IDs used by the plugin.
  */
@@ -40,6 +42,16 @@ const plugin: JupyterFrontEndPlugin<void> = {
   ) => {
     const { commands } = app;
     const trans = (translator ?? nullTranslator).load('jupyterlab');
+
+    requestAPI<any>('get_example')
+      .then((data: any) => {
+        console.log(data);
+      })
+      .catch((reason: any) => {
+        console.error(
+          `The jupyterlab_link_share server extension appears to be missing.\n${reason}`
+        );
+      });
 
     commands.addCommand(CommandIDs.share, {
       label: trans.__('Share Jupyter Server Link'),

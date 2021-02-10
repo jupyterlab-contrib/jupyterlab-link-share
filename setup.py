@@ -9,7 +9,7 @@ from jupyter_packaging import (
     install_npm,
     ensure_targets,
     combine_commands,
-    skip_if_exists
+    skip_if_exists,
 )
 import setuptools
 
@@ -17,34 +17,40 @@ HERE = Path(__file__).parent.resolve()
 
 # The name of the project
 name = "jupyterlab-link-share"
+package = name.replace('-', '_')
 
 # Get our version
 with (HERE / "package.json").open() as f:
     version = json.load(f)["version"]
 
-lab_path = (HERE / name / "labextension")
+lab_path = HERE / package / "labextension"
 
 # Representative files that should exist after a successful build
 jstargets = [
     str(lab_path / "package.json"),
 ]
 
-package_data_spec = {
-    name: [
-        "*"
-    ]
-}
+package_data_spec = {package: ["*"]}
 
 labext_name = "jupyterlab-link-share"
 
 data_files_spec = [
     ("share/jupyter/labextensions/%s" % labext_name, str(lab_path), "**"),
     ("share/jupyter/labextensions/%s" % labext_name, str(HERE), "install.json"),
+    (
+        "etc/jupyter/jupyter_server_config.d",
+        "jupyter-config/jupyter_server_config.d",
+        "jupyterlab_link_share.json",
+    ),
+    (
+        "etc/jupyter/jupyter_notebook_config.d",
+        "jupyter-config/jupyter_notebook_config.d",
+        "jupyterlab_link_share.json",
+    ),
 ]
 
-cmdclass = create_cmdclass("jsdeps",
-    package_data_spec=package_data_spec,
-    data_files_spec=data_files_spec
+cmdclass = create_cmdclass(
+    "jsdeps", package_data_spec=package_data_spec, data_files_spec=data_files_spec
 )
 
 js_command = combine_commands(
