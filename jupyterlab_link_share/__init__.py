@@ -26,6 +26,6 @@ def _jupyter_server_extension_points():
 
 def _load_jupyter_server_extension(server_app):
     setup_handlers(server_app.web_app)
-    server_app.log.info("Registered HelloWorld extension at URL path /jupyterlab_link_share")
+    server_app.log.info("Registered JupyterLab Link Share extension at URL path /jupyterlab_link_share")
 
 load_jupyter_server_extension = _load_jupyter_server_extension
