@@ -17,7 +17,7 @@ lab_path = HERE / package / "labextension"
 # Representative files that should exist after a successful build
 ensured_targets = [
     str(lab_path / "package.json"),
-    str(lab_path / "style" / "style.js"),
+    str(lab_path / "static" / "style.js"),
 ]
 
 package_data_spec = {package: ["*"]}
