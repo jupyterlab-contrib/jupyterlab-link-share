@@ -79,5 +79,8 @@
         "jlpm"
       ]
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
