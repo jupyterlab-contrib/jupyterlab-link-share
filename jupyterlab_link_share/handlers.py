@@ -17,9 +17,9 @@ except:
 class RouteHandler(APIHandler):
     @tornado.web.authenticated
     def get(self):
-        servers = list_jupyter_servers()
+        servers = list(list_jupyter_servers())
         if list_notebook_servers:
-            servers += list_notebook_servers()
+            servers += list(list_notebook_servers())
         # sort by pid so PID 1 is first in Docker and Binder
         servers.sort(key=lambda x: x["pid"])
         self.finish(json.dumps(servers))
