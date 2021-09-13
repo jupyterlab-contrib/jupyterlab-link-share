@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab-link-share",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "JupyterLab Extension to share the URL to a running Jupyter Server",
   "keywords": [
     "jupyter",
@@ -71,5 +71,16 @@
   "jupyterlab": {
     "extension": true,
     "outputDir": "jupyterlab_link_share/labextension"
+  },
+  "jupyter-releaser": {
+    "hooks": {
+      "before-build-npm": [
+        "python -m pip install jupyterlab~=3.1",
+        "jlpm"
+      ]
+    }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
