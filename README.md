@@ -1,7 +1,7 @@
 # jupyterlab-link-share
 
-![Extension status](https://img.shields.io/badge/status-ready-success "ready to be used")
-![Github Actions Status](https://github.com/jupyterlab-contrib/jupyterlab-link-share/workflows/Build/badge.svg)
+[![Extension status](https://img.shields.io/badge/status-ready-success "ready to be used")](https://jupyterlab-contrib.github.io/)
+[![Github Actions Status](https://github.com/jupyterlab-contrib/jupyterlab-link-share/workflows/Build/badge.svg)](https://github.com/jupyterlab-contrib/jupyterlab-link-share/actions/workflows/build.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyterlab-contrib/jupyterlab-link-share/main?urlpath=/lab)
 
 JupyterLab Extension to share the URL to a running Jupyter Server
