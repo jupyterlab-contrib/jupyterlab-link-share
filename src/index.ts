@@ -46,7 +46,15 @@ const plugin: JupyterFrontEndPlugin<void> = {
     commands.addCommand(CommandIDs.share, {
       label: trans.__('Share Jupyter Server Link'),
       execute: async () => {
-        const results: { token: string }[] = await requestAPI<any>('servers');
+        let results: { token: string }[];
+        if (PageConfig.getOption('hubUser') !== '') {
+          // We are running on a JupyterHub, so let's just use the token set in PageConfig.
+          // Any extra servers running on the server will still need to use this token anyway,
+          // as all traffic (including any to jupyter-server-proxy) needs this token.
+          results = [{ token: PageConfig.getToken() }];
+        } else {
+          results = await requestAPI<any>('servers');
+        }
 
         const links = results.map(server => {
           return URLExt.normalize(
