@@ -47,7 +47,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: trans.__('Share Jupyter Server Link'),
       execute: async () => {
         let results: { token: string }[];
-        if (PageConfig.getOption('hubUser') !== '') {
+        const isRunningUnderJupyterhub = PageConfig.getOption('hubUser') !== '';
+        if (isRunningUnderJupyterhub) {
           // We are running on a JupyterHub, so let's just use the token set in PageConfig.
           // Any extra servers running on the server will still need to use this token anyway,
           // as all traffic (including any to jupyter-server-proxy) needs this token.
@@ -67,12 +68,46 @@ const plugin: JupyterFrontEndPlugin<void> = {
         const entries = document.createElement('div');
         links.map(link => {
           const p = document.createElement('p');
-          const a = document.createElement('a');
-          a.href = link;
-          a.innerText = link;
-          p.appendChild(a);
+          const text: HTMLInputElement = document.createElement('input');
+          text.readOnly = true;
+          text.value = link;
+          text.addEventListener('click', e => {
+            (e.target as HTMLInputElement).select();
+          });
+          text.style.width = '100%';
+          p.appendChild(text);
           entries.appendChild(p);
         });
+
+        // Warn users of the security implications of using this link
+        // FIXME: There *must* be a better way to create HTML
+        const warning = document.createElement('div');
+
+        const warningHeader = document.createElement('h3');
+        warningHeader.innerText = trans.__('Security warning!');
+        warning.appendChild(warningHeader);
+
+        const messages = [
+          'Anyone with this link has full access to your notebook server, including all your files!',
+          'Please be careful who you share it with.'
+        ];
+        if (isRunningUnderJupyterhub) {
+          messages.push(
+            // You can restart the server to revoke the token in a JupyterHub
+            'To revoke access, go to File -> Hub Control Panel, and restart your server'
+          );
+        } else {
+          messages.push(
+            // Elsewhere, you *must* shut down your server - no way to revoke it
+            'Currently, there is no way to revoke access other than shutting down your server'
+          );
+        }
+        messages.map(m => {
+          warning.appendChild(document.createTextNode(trans.__(m)));
+          warning.appendChild(document.createElement('br'));
+        });
+
+        entries.appendChild(warning);
 
         const result = await showDialog({
           title: trans.__('Share Jupyter Server Link'),
@@ -80,7 +115,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
           buttons: [
             Dialog.cancelButton({ label: trans.__('Cancel') }),
             Dialog.okButton({
-              label: trans.__('Copy'),
+              label: trans.__('Copy Link'),
               caption: trans.__('Copy the link to the Jupyter Server')
             })
           ]
