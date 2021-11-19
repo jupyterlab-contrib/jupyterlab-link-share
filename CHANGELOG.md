@@ -2,6 +2,22 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.2.2
+
+([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-link-share/compare/v0.2.1...526163e1029b265c52f05f37466e365c30a28a3b))
+
+### Bugs fixed
+
+- Use default user token when running under JupyterHub [#21](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/21) ([@yuvipanda](https://github.com/yuvipanda))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-link-share/graphs/contributors?from=2021-09-13&to=2021-11-19&type=c))
+
+[@jtpio](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Ajtpio+updated%3A2021-09-13..2021-11-19&type=Issues) | [@yuvipanda](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Ayuvipanda+updated%3A2021-09-13..2021-11-19&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.1
 
 ([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-link-share/compare/0.2.0...a9ab3dde03285a7b8597ceb1e26412bcf01bebca))
@@ -26,8 +42,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-link-share/graphs/contributors?from=2021-02-10&to=2021-09-13&type=c))
 
 [@dependabot](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Adependabot+updated%3A2021-02-10..2021-09-13&type=Issues) | [@fcollonval](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Afcollonval+updated%3A2021-02-10..2021-09-13&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Ajtpio+updated%3A2021-02-10..2021-09-13&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.0
 
