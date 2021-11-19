@@ -10,6 +10,8 @@ import {
   showDialog
 } from '@jupyterlab/apputils';
 
+import { IRetroShell } from '@retrolab/application';
+
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 
 import { IMainMenu } from '@jupyterlab/mainmenu';
@@ -33,12 +35,13 @@ namespace CommandIDs {
 const plugin: JupyterFrontEndPlugin<void> = {
   id: 'jupyterlab-link-share:plugin',
   autoStart: true,
-  optional: [ICommandPalette, IMainMenu, ITranslator],
+  optional: [ICommandPalette, IMainMenu, ITranslator, IRetroShell],
   activate: (
     app: JupyterFrontEnd,
     palette: ICommandPalette | null,
     menu: IMainMenu | null,
-    translator: ITranslator | null
+    translator: ITranslator | null,
+    retroShell: IRetroShell | null
   ) => {
     const { commands } = app;
     const trans = (translator ?? nullTranslator).load('jupyterlab');
@@ -58,11 +61,20 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
 
         const links = results.map(server => {
-          return URLExt.normalize(
-            `${PageConfig.getUrl({
-              workspace: PageConfig.defaultWorkspace
-            })}?token=${server.token}`
-          );
+          if (retroShell !== null) {
+            // On retrolab, take current URL and set ?token to it
+            const url = new URL(location.href);
+            url.searchParams.set('token', server.token);
+            return url.toString();
+          } else {
+            // On JupyterLab, let PageConfig.getUrl do its magic.
+            // Handles workspaces, single document mode, etc
+            return URLExt.normalize(
+              `${PageConfig.getUrl({
+                workspace: PageConfig.defaultWorkspace
+              })}?token=${server.token}`
+            );
+          }
         });
 
         const entries = document.createElement('div');
