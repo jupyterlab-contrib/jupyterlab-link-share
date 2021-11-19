@@ -61,7 +61,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
 
         const links = results.map(server => {
-          if (retroShell !== null) {
+          if (retroShell) {
             // On retrolab, take current URL and set ?token to it
             const url = new URL(location.href);
             url.searchParams.set('token', server.token);
