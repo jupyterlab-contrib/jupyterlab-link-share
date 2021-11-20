@@ -1,0 +1,9 @@
+name: jupyterlab-link-share
+channels:
+- conda-forge
+dependencies:
+- jupyterlab>=3.2,<4
+- retrolab>=0.3.13,<0.4
+- numpy
+- nodejs
+- python >=3.9,<3.10
