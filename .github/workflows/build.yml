@@ -28,7 +28,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.cache/pip
-        key: pip-3.9-${{ hashFiles('setup.cfg') }}
+        key: pip-3.9-${{ hashFiles('pyproject.toml') }}
         restore-keys: |
           pip-3.9-
           pip-

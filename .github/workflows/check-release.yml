@@ -33,7 +33,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('setup.cfg', 'setup.py') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-pip-
       - name: Cache checked links
@@ -45,7 +45,7 @@ jobs:
             ${{ runner.os }}-linkcheck-
       - name: Upgrade packaging dependencies
         run: |
-          pip install --upgrade pip setuptools wheel jupyter-packaging~=0.10 --user
+          pip install --upgrade pip setuptools wheel hatch --user
       - name: Install Dependencies
         run: |
           pip install .
