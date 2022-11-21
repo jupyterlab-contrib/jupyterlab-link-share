@@ -5,5 +5,5 @@ dependencies:
 - jupyterlab>=3.5,<4
 - retrolab>=0.3.13,<0.4
 - numpy
-- nodejs=18
+- nodejs=14
 - python >=3.9,<3.10
