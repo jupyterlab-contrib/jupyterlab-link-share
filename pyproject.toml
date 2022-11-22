@@ -6,12 +6,6 @@ build-backend = "hatchling.build"
 name = "jupyterlab_link_share"
 readme = "README.md"
 license = { file = "LICENSE" }
-keywords = [
-    "IPython",
-    "Jupyter",
-    "JupyterLab",
-    "Widgets",
-]
 requires-python = ">=3.7"
 classifiers = [
     "Framework :: Jupyter",
