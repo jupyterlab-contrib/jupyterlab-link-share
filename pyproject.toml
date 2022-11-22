@@ -7,7 +7,7 @@ name = "jupyterlab_link_share"
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [
-    { name = "Projet Jupyter Contributors" },
+    { name = "Projet Jupyter Contributors", email = "" },
 ]
 keywords = [
     "IPython",
