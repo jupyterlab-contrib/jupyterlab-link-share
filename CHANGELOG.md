@@ -2,6 +2,40 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.2.5
+
+([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-link-share/compare/v0.2.4...aec37a2e78197ea21441d4fe1850c12e467aaa0e))
+
+### Maintenance and upkeep improvements
+
+- Bump minimist from 1.2.5 to 1.2.6 [#39](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/39) ([@dependabot](https://github.com/dependabot))
+- Bump url-parse from 1.5.7 to 1.5.10 [#38](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/38) ([@dependabot](https://github.com/dependabot))
+- Bump node-fetch from 2.6.1 to 2.6.7 [#37](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/37) ([@dependabot](https://github.com/dependabot))
+- Bump url-parse from 1.5.3 to 1.5.7 [#36](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/36) ([@dependabot](https://github.com/dependabot))
+- Turn on collaborative mode on Binder [#32](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/32) ([@jtpio](https://github.com/jtpio))
+- Add .binder to the check manifest ignore list [#31](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/31) ([@jtpio](https://github.com/jtpio))
+- Add Binder files to be able to try with RetroLab [#30](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/30) ([@jtpio](https://github.com/jtpio))
+
+### Other merged PRs
+
+- Relax the `jupyter_server` dependency [#47](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/47) ([@jtpio](https://github.com/jtpio))
+- Bump loader-utils from 1.4.1 to 1.4.2 [#46](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/46) ([@dependabot](https://github.com/dependabot))
+- Bump minimatch from 3.0.4 to 3.1.2 [#45](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/45) ([@dependabot](https://github.com/dependabot))
+- Bump loader-utils from 1.4.0 to 1.4.1 [#44](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/44) ([@dependabot](https://github.com/dependabot))
+- Bump moment from 2.29.2 to 2.29.4 [#43](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/43) ([@dependabot](https://github.com/dependabot))
+- Bump terser from 5.7.0 to 5.14.2 [#42](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/42) ([@dependabot](https://github.com/dependabot))
+- Bump shell-quote from 1.7.2 to 1.7.3 [#41](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/41) ([@dependabot](https://github.com/dependabot))
+- Bump moment from 2.29.1 to 2.29.2 [#40](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/40) ([@dependabot](https://github.com/dependabot))
+- Bump nanoid from 3.1.23 to 3.2.0 [#34](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/34) ([@dependabot](https://github.com/dependabot))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-link-share/graphs/contributors?from=2021-11-19&to=2022-12-03&type=c))
+
+[@dependabot](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Adependabot+updated%3A2021-11-19..2022-12-03&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Ajtpio+updated%3A2021-11-19..2022-12-03&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.4
 
 ([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-link-share/compare/v0.2.3...ffb6a15bbae346be5a491f0e36fd9811038bdd4b))
@@ -19,8 +53,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-link-share/graphs/contributors?from=2021-11-19&to=2021-11-19&type=c))
 
 [@dependabot](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Adependabot+updated%3A2021-11-19..2021-11-19&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Ajtpio+updated%3A2021-11-19..2021-11-19&type=Issues) | [@yuvipanda](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Ayuvipanda+updated%3A2021-11-19..2021-11-19&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.3
 
