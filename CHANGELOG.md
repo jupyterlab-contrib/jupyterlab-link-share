@@ -4,7 +4,7 @@
 
 ## 0.2.5
 
-([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-link-share/compare/v0.2.4...aec37a2e78197ea21441d4fe1850c12e467aaa0e))
+([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-link-share/compare/v0.2.4...3fbd165391db6ee7f563bc42a2190179b7dec339))
 
 ### Maintenance and upkeep improvements
 
@@ -18,6 +18,7 @@
 
 ### Other merged PRs
 
+- Remove `prepare` fix [#50](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/50) ([@jtpio](https://github.com/jtpio))
 - Relax the `jupyter_server` dependency [#47](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/47) ([@jtpio](https://github.com/jtpio))
 - Bump loader-utils from 1.4.1 to 1.4.2 [#46](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/46) ([@dependabot](https://github.com/dependabot))
 - Bump minimatch from 3.0.4 to 3.1.2 [#45](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/45) ([@dependabot](https://github.com/dependabot))
