@@ -1,13 +1,13 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin,
+  JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
 import {
   Clipboard,
   Dialog,
   ICommandPalette,
-  showDialog,
+  showDialog
 } from '@jupyterlab/apputils';
 
 import { IRetroShell } from '@retrolab/application';
@@ -60,7 +60,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
           results = await requestAPI<any>('servers');
         }
 
-        const links = results.map((server) => {
+        const links = results.map(server => {
           let url: URL;
           if (retroShell) {
             // On retrolab, take current URL and set ?token to it
@@ -71,33 +71,33 @@ const plugin: JupyterFrontEndPlugin<void> = {
             url = new URL(
               URLExt.normalize(
                 `${PageConfig.getUrl({
-                  workspace: PageConfig.defaultWorkspace,
+                  workspace: PageConfig.defaultWorkspace
                 })}`
               )
             );
           }
-          let tokenURL = new URL(url.toString());
+          const tokenURL = new URL(url.toString());
           if (server.token) {
             // add token to URL
             tokenURL.searchParams.set('token', server.token);
           }
           return {
             noToken: url.toString(),
-            withToken: tokenURL.toString(),
+            withToken: tokenURL.toString()
           };
         });
 
         const dialogBody = document.createElement('div');
         const entries = document.createElement('div');
         dialogBody.appendChild(entries);
-        links.map((link) => {
+        links.map(link => {
           const p = document.createElement('p');
           const text: HTMLInputElement = document.createElement('input');
           text.dataset.noToken = link.noToken;
           text.dataset.withToken = link.withToken;
           text.readOnly = true;
           text.value = link.noToken;
-          text.addEventListener('click', (e) => {
+          text.addEventListener('click', e => {
             (e.target as HTMLInputElement).select();
           });
           text.style.width = '100%';
@@ -147,17 +147,17 @@ const plugin: JupyterFrontEndPlugin<void> = {
           );
         }
 
-        tokenMessages.map((m) => {
+        tokenMessages.map(m => {
           tokenWarning.appendChild(document.createTextNode(trans.__(m)));
           tokenWarning.appendChild(document.createElement('br'));
         });
-        noTokenMessages.map((m) => {
+        noTokenMessages.map(m => {
           noTokenMessage.appendChild(document.createTextNode(trans.__(m)));
           noTokenMessage.appendChild(document.createElement('br'));
         });
         const messages = {
           noToken: noTokenMessage,
-          withToken: tokenWarning,
+          withToken: tokenWarning
         };
 
         const message = document.createElement('div');
@@ -167,27 +167,29 @@ const plugin: JupyterFrontEndPlugin<void> = {
         // if none, no point in adding a checkbox
         const hasToken =
           results.filter(
-            (server) => server.token !== undefined && server.token !== ''
+            server => server.token !== undefined && server.token !== ''
           ).length > 0;
 
-        let includeTokenCheckbox: HTMLInputElement | undefined = undefined;
+        const includeTokenCheckbox: HTMLInputElement | undefined = undefined;
         if (hasToken) {
           // add checkbox to include token _if_ there's a token to include
           const includeTokenCheckbox = document.createElement('input');
           includeTokenCheckbox.type = 'checkbox';
           const tokenLabel = document.createElement('label');
-          tokenLabel.appendChild(includeTokenCheckbox)
-          tokenLabel.appendChild(document.createTextNode(trans.__('Include token in URL')));
+          tokenLabel.appendChild(includeTokenCheckbox);
+          tokenLabel.appendChild(
+            document.createTextNode(trans.__('Include token in URL'))
+          );
           dialogBody.appendChild(tokenLabel);
 
           // when checkbox changes, toggle URL and message
-          includeTokenCheckbox.addEventListener('change', (e) => {
+          includeTokenCheckbox.addEventListener('change', e => {
             const isChecked: boolean = (e.target as HTMLInputElement).checked;
             const key = isChecked ? 'withToken' : 'noToken';
 
             // add or remove the token to the URL inputs
             const inputElements = entries.getElementsByTagName('input');
-            [...inputElements].map((input) => {
+            [...inputElements].map(input => {
               input.value = input.dataset[key] as string;
             });
 
@@ -206,9 +208,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
             Dialog.cancelButton({ label: trans.__('Cancel') }),
             Dialog.okButton({
               label: trans.__('Copy Link'),
-              caption: trans.__('Copy the link to the Jupyter Server'),
-            }),
-          ],
+              caption: trans.__('Copy the link to the Jupyter Server')
+            })
+          ]
         });
         if (result.button.accept) {
           const key =
@@ -217,13 +219,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
               : 'noToken';
           Clipboard.copyToSystem(links[0][key]);
         }
-      },
+      }
     });
 
     if (palette) {
       palette.addItem({
         command: CommandIDs.share,
-        category: trans.__('Server'),
+        category: trans.__('Server')
       });
     }
 
@@ -236,7 +238,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       // Add the command to the menu
       shareMenu.addItem({ command: CommandIDs.share });
     }
-  },
+  }
 };
 
 const plugins: JupyterFrontEndPlugin<any>[] = [plugin];
