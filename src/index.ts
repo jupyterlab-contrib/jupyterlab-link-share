@@ -36,7 +36,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   id: 'jupyterlab-link-share:plugin',
   autoStart: true,
   optional: [ICommandPalette, IMainMenu, ITranslator, IRetroShell],
-  activate: (
+  activate: async (
     app: JupyterFrontEnd,
     palette: ICommandPalette | null,
     menu: IMainMenu | null,
@@ -50,8 +50,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: trans.__('Share Jupyter Server Link'),
       execute: async () => {
         let results: { token: string }[];
-        const isRunningUnderJupyterhub = PageConfig.getOption('hubUser') !== '';
-        if (isRunningUnderJupyterhub) {
+        const isRunningUnderJupyterHub = PageConfig.getOption('hubUser') !== '';
+        if (isRunningUnderJupyterHub) {
           // We are running on a JupyterHub, so let's just use the token set in PageConfig.
           // Any extra servers running on the server will still need to use this token anyway,
           // as all traffic (including any to jupyter-server-proxy) needs this token.
@@ -61,28 +61,42 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
 
         const links = results.map(server => {
+          let url: URL;
           if (retroShell) {
             // On retrolab, take current URL and set ?token to it
-            const url = new URL(location.href);
-            url.searchParams.set('token', server.token);
-            return url.toString();
+            url = new URL(location.href);
           } else {
             // On JupyterLab, let PageConfig.getUrl do its magic.
             // Handles workspaces, single document mode, etc
-            return URLExt.normalize(
-              `${PageConfig.getUrl({
-                workspace: PageConfig.defaultWorkspace
-              })}?token=${server.token}`
+            url = new URL(
+              URLExt.normalize(
+                `${PageConfig.getUrl({
+                  workspace: PageConfig.defaultWorkspace
+                })}`
+              )
             );
           }
+          const tokenURL = new URL(url.toString());
+          if (server.token) {
+            // add token to URL
+            tokenURL.searchParams.set('token', server.token);
+          }
+          return {
+            noToken: url.toString(),
+            withToken: tokenURL.toString()
+          };
         });
 
+        const dialogBody = document.createElement('div');
         const entries = document.createElement('div');
+        dialogBody.appendChild(entries);
         links.map(link => {
           const p = document.createElement('p');
           const text: HTMLInputElement = document.createElement('input');
+          text.dataset.noToken = link.noToken;
+          text.dataset.withToken = link.withToken;
           text.readOnly = true;
-          text.value = link;
+          text.value = link.noToken;
           text.addEventListener('click', e => {
             (e.target as HTMLInputElement).select();
           });
@@ -93,37 +107,103 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
         // Warn users of the security implications of using this link
         // FIXME: There *must* be a better way to create HTML
-        const warning = document.createElement('div');
+        const tokenWarning = document.createElement('div');
 
         const warningHeader = document.createElement('h3');
         warningHeader.innerText = trans.__('Security warning!');
-        warning.appendChild(warningHeader);
+        tokenWarning.appendChild(warningHeader);
 
-        const messages = [
+        const tokenMessages: Array<string> = [];
+
+        tokenMessages.push(
           'Anyone with this link has full access to your notebook server, including all your files!',
           'Please be careful who you share it with.'
-        ];
-        if (isRunningUnderJupyterhub) {
-          messages.push(
+        );
+        if (isRunningUnderJupyterHub) {
+          tokenMessages.push(
+            // You can restart the server to revoke the token in a JupyterHub
+            'They will be able to access this server AS YOU.'
+          );
+          tokenMessages.push(
             // You can restart the server to revoke the token in a JupyterHub
             'To revoke access, go to File -> Hub Control Panel, and restart your server'
           );
         } else {
-          messages.push(
+          tokenMessages.push(
             // Elsewhere, you *must* shut down your server - no way to revoke it
             'Currently, there is no way to revoke access other than shutting down your server'
           );
         }
-        messages.map(m => {
-          warning.appendChild(document.createTextNode(trans.__(m)));
-          warning.appendChild(document.createElement('br'));
-        });
 
-        entries.appendChild(warning);
+        const noTokenMessage = document.createElement('div');
+        const noTokenMessages: Array<string> = [];
+        if (isRunningUnderJupyterHub) {
+          noTokenMessages.push(
+            'Only users with `access:servers` permissions for this server will be able to use this link.'
+          );
+        } else {
+          noTokenMessages.push(
+            'Only authenticated users will be able to use this link.'
+          );
+        }
+
+        tokenMessages.map(m => {
+          tokenWarning.appendChild(document.createTextNode(trans.__(m)));
+          tokenWarning.appendChild(document.createElement('br'));
+        });
+        noTokenMessages.map(m => {
+          noTokenMessage.appendChild(document.createTextNode(trans.__(m)));
+          noTokenMessage.appendChild(document.createElement('br'));
+        });
+        const messages = {
+          noToken: noTokenMessage,
+          withToken: tokenWarning
+        };
+
+        const message = document.createElement('div');
+        message.appendChild(messages.noToken);
+
+        // whether there's any token to be used in URLs
+        // if none, no point in adding a checkbox
+        const hasToken =
+          results.filter(
+            server => server.token !== undefined && server.token !== ''
+          ).length > 0;
+
+        let includeTokenCheckbox: HTMLInputElement | undefined = undefined;
+        if (hasToken) {
+          // add checkbox to include token _if_ there's a token to include
+          includeTokenCheckbox = document.createElement('input');
+          includeTokenCheckbox.type = 'checkbox';
+          const tokenLabel = document.createElement('label');
+          tokenLabel.appendChild(includeTokenCheckbox);
+          tokenLabel.appendChild(
+            document.createTextNode(trans.__('Include token in URL'))
+          );
+          dialogBody.appendChild(tokenLabel);
+
+          // when checkbox changes, toggle URL and message
+          includeTokenCheckbox.addEventListener('change', e => {
+            const isChecked: boolean = (e.target as HTMLInputElement).checked;
+            const key = isChecked ? 'withToken' : 'noToken';
+
+            // add or remove the token to the URL inputs
+            const inputElements = entries.getElementsByTagName('input');
+            [...inputElements].map(input => {
+              input.value = input.dataset[key] as string;
+            });
+
+            // swap out the warning message
+            message.removeChild(message.children[0]);
+            message.appendChild(messages[key]);
+          });
+        }
+
+        dialogBody.appendChild(message);
 
         const result = await showDialog({
           title: trans.__('Share Jupyter Server Link'),
-          body: new Widget({ node: entries }),
+          body: new Widget({ node: dialogBody }),
           buttons: [
             Dialog.cancelButton({ label: trans.__('Cancel') }),
             Dialog.okButton({
@@ -133,7 +213,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
           ]
         });
         if (result.button.accept) {
-          Clipboard.copyToSystem(links[0]);
+          const key =
+            includeTokenCheckbox && includeTokenCheckbox.checked
+              ? 'withToken'
+              : 'noToken';
+          Clipboard.copyToSystem(links[0][key]);
         }
       }
     });
