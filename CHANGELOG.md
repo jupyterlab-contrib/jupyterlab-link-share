@@ -2,6 +2,28 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.3.0
+
+([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-link-share/compare/v0.2.5...d0a3f63d547881e438e68ee66a5a88f796eda90c))
+
+### Enhancements made
+
+- add dialog checkbox to include token in URL [#55](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/55) ([@minrk](https://github.com/minrk))
+
+### Other merged PRs
+
+- Bump webpack from 5.37.1 to 5.76.1 [#56](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/56) ([@dependabot](https://github.com/dependabot))
+- Bump http-cache-semantics from 4.1.0 to 4.1.1 [#53](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/53) ([@dependabot](https://github.com/dependabot))
+- Bump json5 from 1.0.1 to 1.0.2 [#52](https://github.com/jupyterlab-contrib/jupyterlab-link-share/pull/52) ([@dependabot](https://github.com/dependabot))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-link-share/graphs/contributors?from=2022-12-03&to=2023-03-17&type=c))
+
+[@dependabot](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Adependabot+updated%3A2022-12-03..2023-03-17&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Ajtpio+updated%3A2022-12-03..2023-03-17&type=Issues) | [@minrk](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Aminrk+updated%3A2022-12-03..2023-03-17&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.5
 
 ([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-link-share/compare/v0.2.4...3fbd165391db6ee7f563bc42a2190179b7dec339))
@@ -34,8 +56,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-link-share/graphs/contributors?from=2021-11-19&to=2022-12-03&type=c))
 
 [@dependabot](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Adependabot+updated%3A2021-11-19..2022-12-03&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-link-share+involves%3Ajtpio+updated%3A2021-11-19..2022-12-03&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.4
 
