@@ -170,10 +170,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
             server => server.token !== undefined && server.token !== ''
           ).length > 0;
 
-        const includeTokenCheckbox: HTMLInputElement | undefined = undefined;
+        let includeTokenCheckbox: HTMLInputElement | undefined = undefined;
         if (hasToken) {
           // add checkbox to include token _if_ there's a token to include
-          const includeTokenCheckbox = document.createElement('input');
+          includeTokenCheckbox = document.createElement('input');
           includeTokenCheckbox.type = 'checkbox';
           const tokenLabel = document.createElement('label');
           tokenLabel.appendChild(includeTokenCheckbox);
