@@ -1,4 +1,4 @@
-** This repository is now archived as the feature is directly available when installing [`jupyter-collaboration`](https://github.com/jupyterlab/jupyter_collaboration) **
+:warning: **This repository is now archived as the feature is directly available when installing [`jupyter-collaboration`](https://github.com/jupyterlab/jupyter_collaboration)**
 
 # jupyterlab-link-share
 
