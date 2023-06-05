@@ -1,3 +1,5 @@
+** This repository is now archived as the feature is directly available when installing [`jupyter-collaboration`](https://github.com/jupyterlab/jupyter_collaboration) **
+
 # jupyterlab-link-share
 
 [![Extension status](https://img.shields.io/badge/status-ready-success "ready to be used")](https://jupyterlab-contrib.github.io/)
